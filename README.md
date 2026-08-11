@@ -24,6 +24,8 @@ gradle :app:assembleDebug
 
 本仓库附带已构建 APK：`artifacts/cnb2api-android-debug.apk`。
 
+编译、环境部署、推送和 Release 上传流程见 [`BUILD_RELEASE.md`](BUILD_RELEASE.md)。
+
 ## 使用
 
 1. 安装并打开 APK，在“设置”中按需配置端口、API Key、模型和凭证池。
