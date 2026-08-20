@@ -37,7 +37,7 @@ jobs:
         env:
           GRADLE_USER_HOME: ${{ github.workspace }}/.gradle-home
 
-      - name: Upload APK
+      - name: Upload APK as artifact
         uses: actions/upload-artifact@v4
         with:
           name: cnb2api-android-debug
@@ -47,8 +47,10 @@ jobs:
         run: |
           mkdir -p artifacts
           cp app/build/outputs/apk/debug/app-debug.apk artifacts/cnb2api-android-debug.apk
-          git config user.name "CI Bot"
-          git config user.email "ci@github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git add artifacts/cnb2api-android-debug.apk
-          git diff --cached --quiet || git commit -m "update debug APK [skip ci]"
-          git push
+          git diff --cached --quiet && exit 0
+          git commit -m "update debug APK [skip ci]"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git push origin HEAD:main
